@@ -2,13 +2,16 @@ package com.playlist.composite;
 
 
 import com.playlist.core.Track;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Composite do padrão Composite: uma playlist que pode conter faixas e outras playlists.
  */
 public class PlaylistNode implements MediaItem {
-
+  private final String name;
+  private List<MediaItem> itens = new ArrayList<>();
   /**
    * Cria uma playlist vazia.
    *
@@ -16,7 +19,10 @@ public class PlaylistNode implements MediaItem {
    * @throws IllegalArgumentException se o nome for nulo ou em branco.
    */
   public PlaylistNode(String name) {
-    throw new UnsupportedOperationException("Requisito 1: implemente o construtor de PlaylistNode");
+    if (name == null || name.isBlank()){
+      throw new IllegalArgumentException("Arquivo inválido enviado");
+    }
+    this.name = name;
   }
 
   /**
@@ -27,7 +33,14 @@ public class PlaylistNode implements MediaItem {
    * @throws IllegalArgumentException se o item for nulo, for a própria playlist ou contiver a própria playlist (o que criaria um ciclo).
    */
   public PlaylistNode add(MediaItem item) {
-    throw new UnsupportedOperationException("Requisito 1: implemente PlaylistNode.add");
+    if (item == null){
+      throw new IllegalArgumentException("item não pode ser nulo");
+    }
+    if (item == this){
+      throw new IllegalArgumentException("Não pode adicionar o item dentro dele mesmo");
+    }
+    itens.add(item);
+    return this;
   }
 
   /**
