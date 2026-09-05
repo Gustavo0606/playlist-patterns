@@ -1,7 +1,6 @@
 package com.playlist.composite;
 
 import com.playlist.core.Track;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import java.util.List;
  */
 public class TrackItem implements MediaItem {
   private final Track track;
+
   /**
    * Cria a folha a partir de uma faixa.
    *
@@ -17,8 +17,8 @@ public class TrackItem implements MediaItem {
    * @throws IllegalArgumentException se {@code track} for nula.
    */
   public TrackItem(Track track) {
-    if (track == null){
-    throw new IllegalArgumentException("Arquivo inválido enviado");
+    if (track == null) {
+      throw new IllegalArgumentException("Arquivo errado enviado");
     }
     this.track = track;
   }
