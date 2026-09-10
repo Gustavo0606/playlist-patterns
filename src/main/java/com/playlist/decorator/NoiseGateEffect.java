@@ -5,6 +5,8 @@ package com.playlist.decorator;
  */
 public final class NoiseGateEffect extends AudioEffect {
 
+  private final double threshold;
+
   /**
    * Cria o efeito de noise gate.
    *
@@ -13,17 +15,25 @@ public final class NoiseGateEffect extends AudioEffect {
    */
   public NoiseGateEffect(AudioTrack wrapped, double threshold) {
     super(wrapped);
-    throw new UnsupportedOperationException(
-            "Exercício 4: implemente o construtor de NoiseGateEffect");
+    if (threshold < 0.0) {
+      throw new IllegalArgumentException("Threshold não pode ser menor que zero");
+    }
+    this.threshold = threshold;
   }
 
   @Override
   protected String describe() {
-    throw new UnsupportedOperationException("Exercício 4: implemente NoiseGateEffect.describe");
+    return String.format(java.util.Locale.US, "noiseGate(%.2f)", threshold);
   }
 
   @Override
   public double[] getSamples() {
-    throw new UnsupportedOperationException("Exercício 4: implemente NoiseGateEffect.getSamples");
+    double[] samples = wrapped.getSamples();
+    for (int i = 0; i < samples.length; i++) {
+      if (Math.abs(samples[i]) < threshold) {
+        samples[i] = 0.0;
+      }
+    }
+    return samples;
   }
 }

@@ -5,6 +5,8 @@ package com.playlist.decorator;
  */
 public final class VolumeEffect extends AudioEffect {
 
+  private final double factor;
+
   /**
    * Cria o efeito de volume.
    *
@@ -13,16 +15,21 @@ public final class VolumeEffect extends AudioEffect {
    */
   public VolumeEffect(AudioTrack wrapped, double factor) {
     super(wrapped);
-    throw new UnsupportedOperationException("Exercício 4: implemente o construtor de VolumeEffect");
+    this.factor = factor;
   }
 
   @Override
   protected String describe() {
-    throw new UnsupportedOperationException("Exercício 4: implemente VolumeEffect.describe");
+    return "volume(" + factor + ")";
   }
 
   @Override
   public double[] getSamples() {
-    throw new UnsupportedOperationException("Exercício 4: implemente VolumeEffect.getSamples");
+    double[] samples = wrapped.getSamples();
+    for (int i = 0; i < samples.length; i++) {
+      double novoValor = samples[i] * factor;
+      samples[i] = Math.max(-1.0, Math.min(1.0, novoValor));
+    }
+    return samples;
   }
 }
